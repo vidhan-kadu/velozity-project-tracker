@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --color-slate-850: #172033;
+  --color-slate-925: #0c1322;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.5);
+}
+
+/* Global styles */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #0a0f1e;
+  color: #e2e8f0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button, [role="button"], select {
+  cursor: pointer;
+}
+
+/* Background - simple solid gradient, no overlays */
+#root {
+  background: linear-gradient(135deg, #0a0f1e 0%, #111827 50%, #0f172a 100%);
+}
+
+/* Animation keyframes */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+/* Glass card effect - NO backdrop-filter for performance */
+.glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(51, 65, 85, 0.4);
+  contain: layout style;
+}
+
+/* Drag ghost override styles */
+#drag-ghost .glass-card,
+#drag-ghost {
+  cursor: grabbing !important;
+}
+
+/* Touch device improvements */
+@media (pointer: coarse) {
+  .touch-none {
+    touch-action: none;
+  }
+}
+
+/* Responsive grid adjustment for tablet */
+@media (max-width: 768px) {
+  .kanban-grid {
+    flex-direction: column;
+  }
+}
+
+/* Performance: skip rendering off-screen content */
+[data-column-status] {
+  content-visibility: auto;
+  contain-intrinsic-size: 280px 500px;
+}
