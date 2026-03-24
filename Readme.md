@@ -47,7 +47,7 @@ When a drag initiates, the original card is left in the DOM but dimmed via opaci
 
 > Run on production build: `npm run build && npx serve dist`
 
-![Lighthouse Score](./lighthouse-screenshot.png)
+![Lighthouse Score](./lighthouse-screenshot.PNG)
 
 ---
 
