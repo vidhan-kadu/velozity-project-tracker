@@ -95,7 +95,7 @@ function AppContent() {
         </div>
 
         {/* View Switcher + Filters */}
-        <div className="mt-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <div className="mt-4 flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <nav className="flex bg-slate-800/40 rounded-xl p-1 border border-slate-700/30 w-fit" role="tablist" aria-label="View switcher">
             {VIEW_CONFIG.map(view => (
               <button
