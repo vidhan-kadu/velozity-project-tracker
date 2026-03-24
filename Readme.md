@@ -1,6 +1,6 @@
 # Project Tracker — Velozity Global Solutions
 
-**[Live Demo]**
+**[Live Demo](https://velozity-project-tracker-psi.vercel.app/)**
 
 A fully functional frontend application for project management built with **React + TypeScript**. Features Kanban, List, and Timeline views, custom drag-and-drop, and virtual scrolling for 500+ tasks — built from scratch without external UI, DnD, or virtual scrolling libraries.
 
