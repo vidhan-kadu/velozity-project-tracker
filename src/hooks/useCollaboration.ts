@@ -1,6 +1,6 @@
-import { useEffect, useCallback, useMemo } from 'react';
-import { useAppContext } from '../store/AppContext';
-import { SimulatedUser } from '../types';
+import { useEffect, useCallback, useMemo } from "react";
+import { useAppContext } from "../store/AppContext";
+import { SimulatedUser } from "../types";
 
 export function useCollaboration() {
   const { state, dispatch } = useAppContext();
@@ -10,7 +10,8 @@ export function useCollaboration() {
     if (tasks.length === 0) return;
 
     const userIndex = Math.floor(Math.random() * simulatedUsers.length);
-    const randomTask = tasks[Math.floor(Math.random() * Math.min(tasks.length, 50))];
+    const randomTask =
+      tasks[Math.floor(Math.random() * Math.min(tasks.length, 50))];
 
     const updatedUsers: SimulatedUser[] = simulatedUsers.map((u, i) => {
       if (i === userIndex) {
@@ -19,39 +20,41 @@ export function useCollaboration() {
       return u;
     });
 
-    dispatch({ type: 'UPDATE_SIMULATED_USERS', payload: updatedUsers });
+    dispatch({ type: "UPDATE_SIMULATED_USERS", payload: updatedUsers });
   }, [state, dispatch]);
 
   useEffect(() => {
-    // Defer initialization to after initial render is complete
     const timer = setTimeout(() => {
       const { tasks, simulatedUsers } = state;
       if (tasks.length === 0) return;
 
-      const needsInit = simulatedUsers.every(u => u.currentTaskId === null);
+      const needsInit = simulatedUsers.every((u) => u.currentTaskId === null);
       if (needsInit) {
-        const initialized = simulatedUsers.map(u => ({
+        const initialized = simulatedUsers.map((u) => ({
           ...u,
-          currentTaskId: tasks[Math.floor(Math.random() * Math.min(tasks.length, 50))].id,
+          currentTaskId:
+            tasks[Math.floor(Math.random() * Math.min(tasks.length, 50))].id,
         }));
-        dispatch({ type: 'UPDATE_SIMULATED_USERS', payload: initialized });
+        dispatch({ type: "UPDATE_SIMULATED_USERS", payload: initialized });
       }
     }, 2000);
     return () => clearTimeout(timer);
-  }, []); // Only on mount
+  }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      moveRandomUser();
-    }, 5000 + Math.random() * 7000);
+    const interval = setInterval(
+      () => {
+        moveRandomUser();
+      },
+      5000 + Math.random() * 7000,
+    );
 
     return () => clearInterval(interval);
   }, [moveRandomUser]);
 
-  // Memoize the map so it only recalculates when simulatedUsers change
   const usersByTask = useMemo(() => {
     const map = new Map<string, SimulatedUser[]>();
-    state.simulatedUsers.forEach(u => {
+    state.simulatedUsers.forEach((u) => {
       if (u.currentTaskId) {
         const existing = map.get(u.currentTaskId) || [];
         existing.push(u);
@@ -62,9 +65,13 @@ export function useCollaboration() {
   }, [state.simulatedUsers]);
 
   const activeViewerCount = useMemo(
-    () => state.simulatedUsers.filter(u => u.currentTaskId !== null).length,
-    [state.simulatedUsers]
+    () => state.simulatedUsers.filter((u) => u.currentTaskId !== null).length,
+    [state.simulatedUsers],
   );
 
-  return { usersByTask, activeViewerCount, simulatedUsers: state.simulatedUsers };
+  return {
+    usersByTask,
+    activeViewerCount,
+    simulatedUsers: state.simulatedUsers,
+  };
 }

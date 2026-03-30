@@ -1,6 +1,6 @@
-import { useEffect, useCallback } from 'react';
-import { FilterState, Status, Priority } from '../types';
-import { useAppContext } from '../store/AppContext';
+import { useEffect, useCallback } from "react";
+import { FilterState, Status, Priority } from "../types";
+import { useAppContext } from "../store/AppContext";
 
 export function useUrlFilters() {
   const { state, dispatch } = useAppContext();
@@ -11,52 +11,54 @@ export function useUrlFilters() {
 
     const filters: Partial<FilterState> = {};
 
-    const statuses = params.get('statuses');
-    if (statuses) filters.statuses = statuses.split(',') as Status[];
+    const statuses = params.get("statuses");
+    if (statuses) filters.statuses = statuses.split(",") as Status[];
     else filters.statuses = [];
 
-    const priorities = params.get('priorities');
-    if (priorities) filters.priorities = priorities.split(',') as Priority[];
+    const priorities = params.get("priorities");
+    if (priorities) filters.priorities = priorities.split(",") as Priority[];
     else filters.priorities = [];
 
-    const assignees = params.get('assignees');
-    if (assignees) filters.assignees = assignees.split(',');
+    const assignees = params.get("assignees");
+    if (assignees) filters.assignees = assignees.split(",");
     else filters.assignees = [];
 
-    const dueDateFrom = params.get('dueDateFrom');
-    filters.dueDateFrom = dueDateFrom || '';
+    const dueDateFrom = params.get("dueDateFrom");
+    filters.dueDateFrom = dueDateFrom || "";
 
-    const dueDateTo = params.get('dueDateTo');
-    filters.dueDateTo = dueDateTo || '';
+    const dueDateTo = params.get("dueDateTo");
+    filters.dueDateTo = dueDateTo || "";
 
-    dispatch({ type: 'SET_FILTERS', payload: filters });
+    dispatch({ type: "SET_FILTERS", payload: filters });
   }, [dispatch]);
 
-  // Sync filters to URL
   const writeFiltersToUrl = useCallback((filters: FilterState) => {
     const params = new URLSearchParams();
 
-    if (filters.statuses.length > 0) params.set('statuses', filters.statuses.join(','));
-    if (filters.priorities.length > 0) params.set('priorities', filters.priorities.join(','));
-    if (filters.assignees.length > 0) params.set('assignees', filters.assignees.join(','));
-    if (filters.dueDateFrom) params.set('dueDateFrom', filters.dueDateFrom);
-    if (filters.dueDateTo) params.set('dueDateTo', filters.dueDateTo);
+    if (filters.statuses.length > 0)
+      params.set("statuses", filters.statuses.join(","));
+    if (filters.priorities.length > 0)
+      params.set("priorities", filters.priorities.join(","));
+    if (filters.assignees.length > 0)
+      params.set("assignees", filters.assignees.join(","));
+    if (filters.dueDateFrom) params.set("dueDateFrom", filters.dueDateFrom);
+    if (filters.dueDateTo) params.set("dueDateTo", filters.dueDateTo);
 
     const search = params.toString();
-    const newUrl = search ? `${window.location.pathname}?${search}` : window.location.pathname;
-    window.history.pushState({}, '', newUrl);
+    const newUrl = search
+      ? `${window.location.pathname}?${search}`
+      : window.location.pathname;
+    window.history.pushState({}, "", newUrl);
   }, []);
 
-  // Read from URL on mount
   useEffect(() => {
     readFiltersFromUrl();
 
     const handlePopstate = () => readFiltersFromUrl();
-    window.addEventListener('popstate', handlePopstate);
-    return () => window.removeEventListener('popstate', handlePopstate);
+    window.addEventListener("popstate", handlePopstate);
+    return () => window.removeEventListener("popstate", handlePopstate);
   }, [readFiltersFromUrl]);
 
-  // Write to URL when filters change (skip initial mount)
   useEffect(() => {
     writeFiltersToUrl(state.filters);
   }, [state.filters, writeFiltersToUrl]);

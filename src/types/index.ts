@@ -1,5 +1,5 @@
-export type Priority = 'critical' | 'high' | 'medium' | 'low';
-export type Status = 'todo' | 'in-progress' | 'in-review' | 'done';
+export type Priority = "critical" | "high" | "medium" | "low";
+export type Status = "todo" | "in-progress" | "in-review" | "done";
 
 export interface User {
   id: string;
@@ -14,22 +14,22 @@ export interface Task {
   assignee: User;
   priority: Priority;
   status: Status;
-  startDate: string | null; // ISO date string or null
-  dueDate: string; // ISO date string
+  startDate: string | null;
+  dueDate: string;
 }
 
 export interface FilterState {
   statuses: Status[];
   priorities: Priority[];
-  assignees: string[]; // user IDs
+  assignees: string[];
   dueDateFrom: string;
   dueDateTo: string;
 }
 
-export type ViewType = 'kanban' | 'list' | 'timeline';
+export type ViewType = "kanban" | "list" | "timeline";
 
-export type SortField = 'title' | 'priority' | 'dueDate';
-export type SortDirection = 'asc' | 'desc';
+export type SortField = "title" | "priority" | "dueDate";
+export type SortDirection = "asc" | "desc";
 
 export interface SortState {
   field: SortField;
@@ -45,17 +45,17 @@ export interface SimulatedUser {
 }
 
 export const STATUS_LABELS: Record<Status, string> = {
-  'todo': 'To Do',
-  'in-progress': 'In Progress',
-  'in-review': 'In Review',
-  'done': 'Done',
+  todo: "To Do",
+  "in-progress": "In Progress",
+  "in-review": "In Review",
+  done: "Done",
 };
 
 export const PRIORITY_COLORS: Record<Priority, string> = {
-  critical: '#ef4444',
-  high: '#f97316',
-  medium: '#eab308',
-  low: '#22c55e',
+  critical: "#ef4444",
+  high: "#f97316",
+  medium: "#eab308",
+  low: "#22c55e",
 };
 
 export const PRIORITY_ORDER: Record<Priority, number> = {
@@ -65,5 +65,5 @@ export const PRIORITY_ORDER: Record<Priority, number> = {
   low: 3,
 };
 
-export const STATUSES: Status[] = ['todo', 'in-progress', 'in-review', 'done'];
-export const PRIORITIES: Priority[] = ['critical', 'high', 'medium', 'low'];
+export const STATUSES: Status[] = ["todo", "in-progress", "in-review", "done"];
+export const PRIORITIES: Priority[] = ["critical", "high", "medium", "low"];
